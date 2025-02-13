@@ -67,6 +67,10 @@ RUN rm -rf ./*
 COPY --from=ui-builder /conductor/ui/build .
 COPY --from=ui-builder /conductor/docker/server/nginx/nginx.conf /etc/nginx/http.d/default.conf
 
+# Add redis cert
+COPY  docker/redis-cert.pem /usr/local/share/ca-certificates/redis-cert.crt
+RUN update-ca-certificates
+
 # Copy the files for the server into the app folders
 RUN chmod +x /app/startup.sh
 
